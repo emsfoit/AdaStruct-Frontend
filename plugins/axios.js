@@ -29,7 +29,7 @@ function get_message(method, item, i18n) {
   let text;
   let variant;
   if (method == "put" || method == "patch") {
-    text = tem + "updated successfully";
+    text = item + "updated successfully";
     variant = "info";
   } else if (method == "post") {
     text = "created successfully";
