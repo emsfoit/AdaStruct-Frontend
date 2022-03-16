@@ -6,6 +6,9 @@ export const FETCH_ONE = "fetch_one";
 export const UPDATE = "UPDATE";
 export const PATCH = "patch";
 
+export const CREATE_SECONDARY = "create-seconbdary";
+export const DESTROY_SECONDARY = "delete-seconbdary";
+
 export const CHECK_AUTH = "fetchAccessToken";
 export const LOGIN = "login";
 export const LOGOUT = "logout";

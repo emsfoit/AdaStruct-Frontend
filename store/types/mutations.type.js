@@ -21,3 +21,11 @@ export const USER_TYPE = "user_type";
 export const SET_ALERT = "set_alert";
 export const SET_COUNT_DOWN_ALERT = "set_count_down_alert";
 export const RESET_ALERT = "reset_alert";
+
+// BASE
+export const SET_ONE = "set-one";
+export const SET_MANY = "set-many";
+export const ADD_ONE = "add-one";
+
+export const APPEND_ONE = "append-one";
+export const APPEND_ONE_SECONDARY = "append-one-secondary";
