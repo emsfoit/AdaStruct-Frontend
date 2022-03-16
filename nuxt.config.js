@@ -38,6 +38,7 @@ export default {
     "@/plugins/repository",
     "@/plugins/jwt.js",
     "@/plugins/nuxt-client-init.client.js",
+    "@/plugins/bootstrapVueIcons.js",
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
