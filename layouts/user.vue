@@ -1,9 +1,7 @@
 <template>
   <div class="page-wrapper" v-show="isLoaded">
-    <!-- <navigation /> -->
+    <layout-navbar :user="user" />
     <Nuxt />
-    <!-- <error v-else />
-    <app-footer /> -->
   </div>
 </template>
 <script>

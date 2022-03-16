@@ -78,7 +78,8 @@ export default {
   padding: 36px 20px;
   max-width: 556px;
   margin: 0 auto;
-  margin-bottom: 200px;
+  margin-top: 100px;
+  margin-bottom: 100px;
 }
 
 input {
