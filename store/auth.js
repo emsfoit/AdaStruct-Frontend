@@ -1,6 +1,7 @@
 import {
   LOGIN,
   LOGOUT,
+  SIGNUP,
   CHECK_AUTH,
   RESET_PASSWORD,
   UPDATE_PASSWORD,
@@ -80,6 +81,14 @@ export const mutations = {
 export const actions = {
   async [LOGIN](context, payload) {
     const { data } = await this.$AuthService.login(payload);
+    let user = data;
+    context.commit(SET_USER, user);
+    context.commit(SET_AUTH, data);
+    this.app.router.push(`/users/projects`);
+    return data;
+  },
+  async [SIGNUP](context, payload) {
+    const { data } = await this.$AuthService.sign_up(payload);
     let user = data;
     context.commit(SET_USER, user);
     context.commit(SET_AUTH, data);
