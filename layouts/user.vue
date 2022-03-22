@@ -1,6 +1,7 @@
 <template>
   <div class="page-wrapper" v-show="isLoaded">
     <layout-navbar :user="user" />
+    <div style="margin-top: 70px" />
     <Nuxt />
   </div>
 </template>
