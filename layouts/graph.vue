@@ -9,12 +9,12 @@
         <a @click="goTo('config')" :class="{ active: isActive('config') }"
           >Config</a
         >
-        <a @click="goTo('logs')" :class="{ active: isActive('logs') }">Logs</a>
         <a
           @click="goTo('inferences')"
           :class="{ active: isActive('inferences') }"
           >Inferences</a
         >
+        <a @click="goTo('logs')" :class="{ active: isActive('logs') }">Logs</a>
       </div>
       <div class="content">
         <Nuxt />
