@@ -336,3 +336,46 @@ export const OAG = {
     test_range: { start: 2016, end: 2021 },
   },
 };
+
+export const NEW_GRAPH_SETTING = {
+  nodes: [
+    {
+      name: "",
+      df: "",
+      features: [
+        {
+          feature_name: "id",
+          column_name: "",
+        },
+      ],
+    },
+  ],
+  edges: [
+    {
+      name: "",
+      df: "",
+      source: "",
+      target: "",
+      self_edge: true,
+    },
+  ],
+  main_node: "",
+  node_to_calculate_repitition: "",
+  emb: [
+    {
+      node: "",
+      feature: "",
+      model: "XLNetTokenizer",
+      min_number_of_words: 4,
+    },
+  ],
+  weight: {
+    df: "",
+    feature: "",
+  },
+  weight_split_range: {
+    train_range: { start: "", end: "" },
+    valid_range: { start: "", end: "" },
+    test_range: { start: "", end: "" },
+  },
+};
