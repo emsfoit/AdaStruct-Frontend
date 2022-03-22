@@ -15,7 +15,9 @@ export default (ApiService) => ({
   change_password(slug, payload) {
     return ApiService.put(`/users/${slug}/password/update`, payload);
   },
-  sign_up(payload) {},
+  sign_up(payload) {
+    return ApiService.post("/users/sign_up", payload);
+  },
   get(slug) {
     return ApiService.get("/user", slug);
   },
