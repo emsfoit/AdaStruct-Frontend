@@ -19,3 +19,6 @@ export const GET_USER_PROFILE = "get-user-profile";
 
 export const SIGNUP = "sign_up";
 export const VALIDATE = "validate";
+export const DOWNLOAD = "download";
+export const TRAIN = "train";
+export const KILL = "kill";
