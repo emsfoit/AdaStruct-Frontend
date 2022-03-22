@@ -4,26 +4,26 @@
       class="mb-2"
       variant="success"
       size="sm"
-      v-b-modal="'project-form-model'"
+      v-b-modal="'graph-form-modal'"
     >
-      New Project
+      New Graph
     </b-button>
-    <projects-new-modal />
-
-    <lazy-projects-list></lazy-projects-list>
+    <graphs-new-modal />
+    <lazy-graphs-list />
   </section>
 </template>
 
 <script>
-import { FETCH_ALL } from "../../../store/types/actions.type";
-
+import { FETCH_ALL } from "../../../../../store/types/actions.type";
 export default {
   layout: "user",
-  name: "projects",
+  name: "Graphs",
   methods: {
-    get_data() {
+    fetch_graphs() {
       this.$store
-        .dispatch(`projects/${FETCH_ALL}`)
+        .dispatch(`graphs/${FETCH_ALL}`, {
+          project_id: this.$route.params.id,
+        })
         .then(() => {})
         .catch((error) => {
           alert(error);
@@ -31,7 +31,7 @@ export default {
     },
   },
   created() {
-    this.get_data();
+    this.fetch_graphs();
   },
 };
 </script>

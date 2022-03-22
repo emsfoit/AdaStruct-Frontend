@@ -1,10 +1,10 @@
 <template>
-  <div class="login-container text-center">
-    <h1 class="h2 mb-4">Login</h1>
+  <div class="sign_up-container text-center">
+    <h1 class="h2 mb-4">Sign up</h1>
     <b-alert class="mt-3" v-if="error" variant="danger" show dismissible>{{
       this.error
     }}</b-alert>
-    <form @submit.prevent="login">
+    <form @submit.prevent="sign_up">
       <b-form-group>
         <b-form-input
           type="email"
@@ -12,6 +12,14 @@
           id="email-input"
           v-model="user.user_email"
           autofocus
+          required
+        />
+      </b-form-group>
+      <b-form-group>
+        <b-form-input
+          placeholder="Company"
+          id="Company-input"
+          v-model="user.company_name"
           required
         />
       </b-form-group>
@@ -25,55 +33,53 @@
         />
       </b-form-group>
       <b-button variant="action-primary" class="mt-4" type="submit">
-        Login
+        Sign up
       </b-button>
     </form>
     <div class="row mt-2">
       <div class="col-12">
-        <NuxtLink class="text-decoration" to="/user/sign_up">
-          Sign up
-        </NuxtLink>
+        <NuxtLink class="text-decoration" to="/user/login"> Back </NuxtLink>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { LOGIN } from "../../store/types/actions.type";
+import { LOGIN, SIGNUP } from "../../store/types/actions.type";
 import { RESET_ALERT } from "../../store/types/mutations.type";
 
 export default {
-  name: "LoginForm",
+  name: "SignupForm",
   data() {
     return {
       error: "",
       user: {
         user_email: "",
         password: "",
+        company_name: "",
       },
     };
   },
   methods: {
-    login() {
+    sign_up() {
       this.$store
-        .dispatch(`auth/${LOGIN}`, {
-          user_email: this.user.user_email.toLowerCase(),
-          password: this.user.password,
+        .dispatch(`auth/${SIGNUP}`, {
+          ...this.user,
         })
         .then((data) => {
           this.$store.commit(`alerts/${RESET_ALERT}`);
         })
         .catch((error) => {
-          if (error.response.status == 401)
-            this.error = "wronng E-Mail/Password";
-          else this.error = "something went wrong";
+          if (error.response.data.message) {
+            this.error = error.response.data.message;
+          } else this.error = "something went wrong";
         });
     },
   },
 };
 </script>
 <style scoped>
-.login-container {
+.sign_up-container {
   background-color: #eaebe5;
   padding: 36px 20px;
   max-width: 556px;

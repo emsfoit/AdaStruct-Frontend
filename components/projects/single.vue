@@ -1,24 +1,15 @@
 <template>
   <tr>
-    <td scope="row">{{ project.id }}</td>
+    <td scope="row">
+      <nuxt-link :to="{ path: `/user/projects/${project.id}/graphs` }">{{
+        project.id
+      }}</nuxt-link>
+    </td>
     <td>{{ project.name }}</td>
     <td>{{ project.created_at }}</td>
     <td>
-      <b-button
-        :to="{ path: `/user/projects/${this.project.id}/dataset` }"
-        variant="outline-info"
-      >
-        Project Dataset
-      </b-button>
-      <b-button
-        v-b-modal="'projects_modal_' + project.id"
-        variant="outline-primary"
-        :to="{ path: `/user/projects/${this.project.id}/graph` }"
-      >
-        Graph Setting
-      </b-button>
       <b-button variant="outline-danger" @click="prompt_delete()">
-        Remove project
+        Remove
       </b-button>
     </td>
   </tr>

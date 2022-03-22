@@ -1,29 +1,20 @@
 <template>
   <section class="container mt-4 mb-4">
-    <b-button
-      class="mb-2"
-      variant="success"
-      size="sm"
-      v-b-modal="'project-form-model'"
-    >
-      New Project
-    </b-button>
-    <projects-new-modal />
-
-    <lazy-projects-list></lazy-projects-list>
+    <lazy-logs-list />
   </section>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import { FETCH_ALL } from "../../../store/types/actions.type";
-
 export default {
   layout: "user",
-  name: "projects",
+  name: "Logs",
+
   methods: {
-    get_data() {
+    fetch_logs() {
       this.$store
-        .dispatch(`projects/${FETCH_ALL}`)
+        .dispatch(`logs/${FETCH_ALL}`, {})
         .then(() => {})
         .catch((error) => {
           alert(error);
@@ -31,7 +22,7 @@ export default {
     },
   },
   created() {
-    this.get_data();
+    this.fetch_logs();
   },
 };
 </script>
