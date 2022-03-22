@@ -94,7 +94,7 @@ export const actions = {
   // update
   async [UPDATE](context, payload) {
     context.commit(SET_LOADING, true);
-    const { data } = await this.$ProjectsService.pathc(payload.id, payload);
+    const { data } = await this.$ProjectsService.patch(payload.id, payload);
 
     projects.push(data);
     context.commit(SET_MANY, projects);

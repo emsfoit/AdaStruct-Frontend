@@ -84,7 +84,8 @@ export const actions = {
     for (let i = 0; i < payload.files.length; i++) {
       let formData = new FormData();
       formData.append("file", payload.files[i]);
-      formData.append("project_id", payload.project_id);
+      formData.append("graph_id", payload.graph_id);
+      formData.append("sep", payload.sep);
       const { data } = await this.$DatasetsService.create_file(formData);
       context.commit(APPEND_ONE, data.data);
     }

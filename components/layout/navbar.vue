@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="isAuthenticated">
-      <b-navbar toggleable="lg" type="dark" variant="dark">
+      <b-navbar fixed="top" toggleable="lg" type="dark" variant="dark">
         <b-navbar-brand href="/">AdaStruct</b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
