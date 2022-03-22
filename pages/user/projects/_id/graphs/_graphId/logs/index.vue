@@ -26,5 +26,8 @@ export default {
         });
     },
   },
+  created() {
+    this.fetch_logs();
+  },
 };
 </script>

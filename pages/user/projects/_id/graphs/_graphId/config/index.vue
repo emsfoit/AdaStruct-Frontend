@@ -21,16 +21,18 @@ export default {
   },
   methods: {
     submit_graph_config_form(graph) {
+      let self = this;
+
       this.$store
         .dispatch(`graphs/${PATCH}`, {
-          id: this.selected_graph,
+          id: this.$route.params.graphId,
           settings: graph,
         })
         .then(() => {
           alert("Updated!");
-          // this.$router.push({
-          //   path: "/user/projects",
-          // });
+          self.$router.push(
+            `/user/projects/${this.$route.params.id}/graphs/${this.$route.params.graphId}/logs`
+          );
         })
         .catch((error) => {
           alert(error);
