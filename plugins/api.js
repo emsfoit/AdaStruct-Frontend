@@ -12,8 +12,11 @@ function appendSlash(str, append = false) {
   }
 }
 const apiFactory = ($axios) => ({
-  download(resource, params) {
+  download(resource, slug = "", params = {}, save_as = "file") {
     resource = appendSlash(resource);
+    if (slug) {
+      resource += `${slug}/`;
+    }
     return $axios({
       url: resource,
       method: "GET",
@@ -24,12 +27,7 @@ const apiFactory = ($axios) => ({
         var fileURL = window.URL.createObjectURL(new Blob([response.data]));
         var fileLink = document.createElement("a");
         fileLink.href = fileURL;
-        let filetype = params.params.type;
-        if (params.params.type == "xlsx") {
-          filetype = "zip";
-        }
-        let full_name = `${params.params.file_name}.${filetype}`;
-        fileLink.setAttribute("download", full_name);
+        fileLink.setAttribute("download", save_as);
         document.body.appendChild(fileLink);
         fileLink.click();
       })
@@ -38,50 +36,27 @@ const apiFactory = ($axios) => ({
       });
   },
   query(resource, params, action = "") {
-    if (action == "no_append") {
-      return $axios.get(resource, params);
-    } else {
-      resource = appendSlash(resource);
-      return $axios.get(resource, params);
-    }
+    resource = appendSlash(resource);
+    return $axios.get(resource, params);
   },
   get(resource, slug = "") {
     resource = appendSlash(resource);
     if (slug) {
+      resource = appendSlash(resource, true);
       resource += `${slug}/`;
     }
     return $axios.get(resource);
-  },
-  get_no_append(resource) {
-    return $axios.get(resource);
-  },
-  get_with_params(resource, slug, params) {
-    resource = appendSlash(resource);
-    if (slug) {
-      resource += `${slug}/`;
-    }
-    return $axios.get(resource, params);
   },
   post(resource, params, config = {}) {
     resource = appendSlash(resource);
-    let p = params;
     return $axios.post(resource, params, config);
   },
-  post_for_dub(resource, params, config = {}) {
-    return $axios.post(resource, params, config);
-  },
-  update(resource, slug, params, config = {}) {
+  update(resource, params, config = {}) {
     resource = appendSlash(resource);
-    if (slug) {
-      resource += `${slug}/`;
-    }
     return $axios.put(resource, params, config);
   },
   patch(resource, slug, params, config = {}) {
     resource = appendSlash(resource);
-    if (slug) {
-      resource += `${slug}/`;
-    }
     return $axios.patch(resource, params, config);
   },
   put(resource, params) {
@@ -95,13 +70,6 @@ const apiFactory = ($axios) => ({
   delete(resource) {
     resource = appendSlash(resource);
     return $axios.delete(resource);
-  },
-  download_pdf(resource) {
-    return $axios({
-      url: resource,
-      method: "GET",
-      responseType: "blob",
-    });
   },
 });
 export default function ({ $axios }, inject) {
