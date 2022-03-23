@@ -72,8 +72,11 @@ export default {
           id: this.inference.id,
         })
         .then((data) => {
-          //  TODO redirect to log
           alert("Trainign will start soon");
+          this.$router.push(`/user/logs/${data.log_id}`);
+          // this.$router.push(
+          //   `/user/projects/${this.$route.params.id}/graphs/${this.$route.params.graphId}/logs`
+          // );
         })
         .catch((err) => {
           console.log(err);

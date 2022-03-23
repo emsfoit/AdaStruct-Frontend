@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div v-html="log_text" class="log-container" />
+    <div ref="logContainer" v-html="log_text" class="log-container" />
   </div>
 </template>
 
@@ -13,12 +13,32 @@ export default {
     ...mapGetters({
       log: "logs/one",
     }),
-    log_text() {
-      if (this.log && this.log.log) {
-        return this.log.log;
-      }
-      return "";
+    log_text: {
+      get: function () {
+        if (this.log && this.log.log) {
+          return this.log.log;
+        }
+        return "";
+      },
     },
+    log_extra_info: {
+      get: function () {
+        let sorted = {};
+        if (this.log && this.log.extra_info && this.log.extra_info.lengt > 0) {
+          let extra_info = this.log.extra_info;
+          for (elm in extra_info) {
+            sorted[elm.epoch][elm];
+          }
+          return this.log.log;
+        }
+        return "";
+      },
+    },
+  },
+  updated() {
+    let elm = this.$refs.logContainer;
+    elm.scrollTop = elm.scrollHeight;
+    elm.scrollIntoView({ behavior: "smooth" });
   },
 };
 </script>
@@ -41,6 +61,9 @@ export default {
   background: #232f3e;
   white-space: pre-wrap;
   word-break: break-word;
+  overflow-y: scroll;
   border-collapse: collapse;
+  height: 800px;
+  max-height: 800px;
 }
 </style>

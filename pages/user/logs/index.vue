@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import { FETCH_ALL } from "../../../store/types/actions.type";
 export default {
   layout: "user",

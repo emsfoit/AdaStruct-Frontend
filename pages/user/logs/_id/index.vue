@@ -8,22 +8,34 @@
 import { FETCH_ONE } from "../../../../store/types/actions.type";
 export default {
   layout: "user",
-  name: "Log-Show",
-
+  name: "LogShow",
+  data() {
+    return {
+      fetch_interval: "",
+    };
+  },
   methods: {
+    fetcher() {
+      this.fetch_log();
+      this.fetch_interval = setInterval(this.fetch_log, 3000);
+    },
     fetch_log() {
-      this.$store
+      return this.$store
         .dispatch(`logs/${FETCH_ONE}`, {
           id: this.$route.params.id,
         })
-        .then(() => {})
+        .then((data) => {
+          if (!data.status.includes("running")) {
+            clearInterval(this.fetch_interval);
+          }
+        })
         .catch((error) => {
           alert(error);
         });
     },
   },
   created() {
-    this.fetch_log();
+    this.fetcher();
   },
 };
 </script>

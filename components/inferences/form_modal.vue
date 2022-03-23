@@ -46,12 +46,11 @@
 </template>
 <script>
 import { CREATE, PATCH } from "../../store/types/actions.type";
-let x = {
-  graph_dir: "storage/OAG_grap_reddit_10000.pk",
-  model_dir: "storage",
-  main_node: "post",
-  predicted_node_name: "subreddit",
-  edge_name: "post_subreddit",
+
+let HGT_MODAL_SETTINGS = {
+  main_node: "paper",
+  predicted_node_name: "field",
+  edge_name: "paper_field",
   exract_attention: false,
   show_tensor_board: false,
   multi_lable_task: true,
@@ -68,7 +67,7 @@ let x = {
   n_pool: 4,
   n_batch: 32,
   repeat: 2,
-  batch_size: 256,
+  batch_size: 255,
   clip: 0.25,
   include_fake_edges: false,
   remove_edges: false,
@@ -84,7 +83,7 @@ export default {
           id: "",
           name: "",
           graph_id: "",
-          settings: JSON.stringify(x, undefined, 4),
+          settings: JSON.stringify(HGT_MODAL_SETTINGS, undefined, 4),
         };
       },
     },
