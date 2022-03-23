@@ -3,7 +3,7 @@
     class="width"
     size="lg"
     :id="`inference-form-modal${mutable.id}`"
-    ref="modal"
+    :ref="`inference-form-modal${mutable.id}`"
     title="Inference"
   >
     <div class="b-modal" style="max-height: 500px">
@@ -97,6 +97,7 @@ export default {
   },
   methods: {
     submit() {
+      let self = this;
       this.$store
         .dispatch(`inferences/${this.getAction()}`, {
           id: this.mutable.id,
@@ -108,7 +109,7 @@ export default {
           this.toggleModal();
         })
         .catch((errors) => {
-          this.errors = errors.response.data;
+          alert(errors);
         });
     },
     getAction() {
@@ -117,11 +118,19 @@ export default {
       } else return CREATE;
     },
     toggleModal() {
-      this.$refs["modal"].toggle("#toggle-btn");
+      let ref = `inference-form-modal${this.mutable.id}`;
+      this.$refs[ref].toggle("#toggle-btn");
     },
   },
   created() {
     this.mutable = JSON.parse(JSON.stringify(this.inference));
+    if (this.mutable.settings && typeof this.mutable.settings == String) {
+      this.mutable.settings = JSON.stringify(
+        this.mutable.settings,
+        undefined,
+        4
+      );
+    }
   },
 };
 </script>

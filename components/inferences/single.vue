@@ -2,30 +2,33 @@
   <tr>
     <inferences-form-modal :inference="inference" />
     <td scope="row">
-      <a href="#" @click="show_inference_details">
+      <a href="#">
         {{ inference.id }}
       </a>
     </td>
     <td>{{ inference.name }}</td>
     <td>{{ inference.created_at }}</td>
     <td>
-      <!-- <b-button
+      <b-button
         variant="outline-info"
-        v-if="inference.model_path"
+        v-if="inference.modal_path"
         @click="download_inference"
       >
         Download
-        v-if="last_prcess_log.status"
-      </b-button> -->
-      <b-button variant="outline-info" @click="start_traininig">
-        Train
       </b-button>
       <b-button
+        :disabled="allow_trainig"
+        variant="outline-info"
+        @click="start_traininig"
+      >
+        Train
+      </b-button>
+      <!-- <b-button
         variant="outline-info"
         @click="kill_traininig(last_prcess_log.id)"
       >
         Kill
-      </b-button>
+      </b-button> -->
       <b-button
         variant="outline-info"
         v-b-modal="'inference-form-modal' + inference.id"
@@ -47,11 +50,17 @@ export default {
       type: Object,
       required: true,
     },
+    process_logs: {
+      type: Array,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      allow_trainig: true,
+    };
   },
   methods: {
-    show_inference_details() {
-      this.$parent.$emit("show_inference_details", this.inference.id);
-    },
     prompt_delete() {
       if (confirm("Are you sure you want to remove this inference?")) {
         this.$store
@@ -72,11 +81,7 @@ export default {
           id: this.inference.id,
         })
         .then((data) => {
-          alert("Trainign will start soon");
           this.$router.push(`/user/logs/${data.log_id}`);
-          // this.$router.push(
-          //   `/user/projects/${this.$route.params.id}/graphs/${this.$route.params.graphId}/logs`
-          // );
         })
         .catch((err) => {
           console.log(err);
@@ -89,8 +94,7 @@ export default {
           process_id: process_id,
         })
         .then((data) => {
-          //  TODO redirect to log
-          alert("Trainign will start soon");
+          alert("Trainign will Stop");
         })
         .catch((err) => {
           console.log(err);
@@ -107,32 +111,16 @@ export default {
         });
     },
   },
-  computed: {
-    sorted_process_logs: function () {
-      let process_logs = this.inference.process_logs;
-      if (process_logs && process_logs.length > 0) {
-        return process_logs.sort((a, b) =>
-          new Date(a.created_at) > new Date(b.last_nom) ? 1 : -1
-        );
-      } else return [];
-    },
-    last_prcess_log: function () {
-      return this.sorted_process_logs.length > 0
-        ? this.sorted_process_logs[0]
-        : {};
-    },
-    // show_shit: function () {
-    //   let x = this.last_prcess_log;
-    //   if (x.status && x.status.includes("training")) {
-    //     return true;
-    //   }
-    //   return false;
-    //   debugger;
-    //   return false;
-    //   if (this.last_prcess_log.status)
-    //     return this.last_prcess_log.status.includes("training");
-    //   return false;
-    // },
+  created() {
+    let items = [...this.process_logs];
+    if (items && items.length > 0) {
+      items = items.sort((a, b) =>
+        new Date(a.created_at) < new Date(b.created_at) ? 1 : -1
+      );
+      this.sorted_process_logs = items;
+      console.log(items[0]);
+      this.allow_trainig = items[0].status.includes("running");
+    }
   },
 };
 </script>

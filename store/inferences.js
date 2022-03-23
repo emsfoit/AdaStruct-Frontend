@@ -112,14 +112,17 @@ export const actions = {
   async [PATCH](context, payload) {
     context.commit(SET_LOADING, true);
     let id = payload.id;
-    const { data } = (await this.$InferencesService.patch(id, payload)) || {};
-    let inferences = context.state.list.filter(
-      (inference) => payload.id != inference.id
-    );
-    inferences.push(data.data);
-    context.commit(SET_MANY, inferences);
+    const request = await this.$InferencesService.patch(id, payload);
+    if (request.status == 200) {
+      let inferences = context.state.list.filter(
+        (inference) => payload.id != inference.id
+      );
+      context.commit(SET_MANY, inferences);
+    }
+    context.commit(ADD_ONE, JSON.parse(JSON.stringify(request.data.data)));
+
     context.commit(SET_LOADING, false);
-    return data.data;
+    return request.data.data;
   },
   // destroy
   async [DESTROY](context, payload) {

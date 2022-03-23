@@ -12,7 +12,7 @@
     </thead>
     <tbody>
       <logs-single
-        v-for="log in logs"
+        v-for="log in sorted_logs"
         v-bind:log="log"
         v-bind:key="log.id"
       ></logs-single>
@@ -30,6 +30,12 @@ export default {
       logs: "logs/list",
       loading: "logs/loading",
     }),
+    sorted_logs() {
+      let items = [...this.logs];
+      return items.sort((a, b) =>
+        new Date(a.created_at) < new Date(b.created_at) ? 1 : -1
+      );
+    },
   },
 };
 </script>

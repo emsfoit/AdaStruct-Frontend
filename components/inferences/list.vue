@@ -12,6 +12,7 @@
       <inferences-single
         v-for="inference in inferences"
         v-bind:inference="inference"
+        :process_logs="inference.process_logs"
         v-bind:key="inference.id"
       ></inferences-single>
     </tbody>
@@ -26,9 +27,6 @@ export default {
   computed: {
     ...mapGetters({
       inferences: "inferences/list",
-      meta: "inferences/meta",
-      loading: "inferences/loading",
-      queries: "inferences/queries",
     }),
   },
 };
