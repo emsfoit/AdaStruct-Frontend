@@ -25,7 +25,6 @@ export default {
 
   methods: {
     submitFiles(files, sep) {
-      debugger;
       this.$store
         .dispatch(`datasets/${CREATE}`, {
           files: files,

@@ -1,6 +1,7 @@
 <template>
   <section class="container mt-4 mb-4">
     <lazy-graphs-config-form
+      v-if="loaded"
       :graph="graph"
       @submit_graph_config_form="submit_graph_config_form"
     />
@@ -8,7 +9,10 @@
 </template>
 
 <script>
-import { PATCH } from "../../../../../../../store/types/actions.type";
+import {
+  PATCH,
+  FETCH_ALL,
+} from "../../../../../../../store/types/actions.type";
 import { NEW_GRAPH_SETTING, OAG } from "../../../../../../../static/graphs";
 import { mapGetters } from "vuex";
 export default {
@@ -17,12 +21,25 @@ export default {
   data() {
     return {
       graph: OAG,
+      loaded: false,
     };
   },
   methods: {
+    fetch_datasets() {
+      return this.$store
+        .dispatch(`datasets/${FETCH_ALL}`, {
+          graph_id: this.$route.params.graphId,
+        })
+        .then(() => {})
+        .catch((error) => {
+          alert(error);
+        })
+        .finally(() => {
+          this.loaded = true;
+        });
+    },
     submit_graph_config_form(graph) {
       let self = this;
-
       this.$store
         .dispatch(`graphs/${PATCH}`, {
           id: this.$route.params.graphId,
@@ -38,6 +55,9 @@ export default {
           alert(error);
         });
     },
+  },
+  created() {
+    this.fetch_datasets();
   },
 };
 </script>

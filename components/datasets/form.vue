@@ -49,7 +49,6 @@ export default {
   methods: {
     submit() {
       if (this.form.sep && this.form.files.length > 0) {
-        debugger;
         this.$emit("submitFiles", this.form.files, this.form.sep);
         this.form.files = [];
       }
