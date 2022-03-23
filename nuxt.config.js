@@ -39,6 +39,7 @@ export default {
     "@/plugins/jwt.js",
     "@/plugins/nuxt-client-init.client.js",
     "@/plugins/bootstrapVueIcons.js",
+    { src: "@/plugins/vue-apexcharts.js", ssr: false },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
